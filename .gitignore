@@ -1,0 +1,124 @@
+# RFID-Based Attendance and Access System
+
+## Author
+**Shaik Nazma**
+
+## Project Overview
+
+The RFID-Based Attendance and Access System is an Arduino-based project that uses an RFID reader to identify authorized RFID cards. When a card is scanned, the system checks its unique ID and displays the access status on a 16x2 LCD.
+
+The system also provides an audio indication using a buzzer and sends attendance/access information to the laptop through the Serial Monitor.
+
+## Objectives
+
+- Identify students/users using RFID cards.
+- Mark attendance for authorized cards.
+- Provide access control based on RFID card ID.
+- Display the result on a 16x2 LCD.
+- Provide buzzer feedback for accepted and denied cards.
+- Log RFID and attendance information through the Serial Monitor.
+
+## Components Used
+
+- Arduino Uno
+- RC522 RFID Reader
+- RFID Card/Tag
+- 16x2 LCD Display
+- Buzzer
+- Jumper Wires
+- Wokwi Simulator
+
+## Pin Connections
+
+### RC522 RFID Reader
+
+| RC522 Pin | Arduino Uno |
+|---|---|
+| 3.3V | 3.3V |
+| GND | GND |
+| RST | D9 |
+| SDA/SS | D10 |
+| MOSI | D11 |
+| MISO | D12 |
+| SCK | D13 |
+| IRQ | Not Connected |
+
+### 16x2 LCD
+
+| LCD Pin | Arduino Uno |
+|---|---|
+| VSS | GND |
+| VDD | 5V |
+| V0 | GND |
+| RS | D2 |
+| RW | GND |
+| E | D3 |
+| D4 | D4 |
+| D5 | D5 |
+| D6 | D6 |
+| D7 | D7 |
+| A/LED+ | 5V |
+| K/LED- | GND |
+
+### Buzzer
+
+| Buzzer Pin | Arduino Uno |
+|---|---|
+| + | D8 |
+| - | GND |
+
+## Software and Technologies
+
+- Arduino C/C++
+- Arduino IDE / Wokwi
+- SPI Communication
+- MFRC522 Library
+- LiquidCrystal Library
+
+## Working Principle
+
+1. The Arduino initializes the RC522 RFID reader and LCD.
+2. The user scans an RFID card near the RC522 reader.
+3. The RFID reader reads the card's unique ID (UID).
+4. The Arduino compares the UID with the authorized UID.
+5. If the UID matches:
+   - LCD displays **ACCESS GRANTED**.
+   - Attendance is marked.
+   - A short buzzer sound is generated.
+6. If the UID does not match:
+   - LCD displays **ACCESS DENIED**.
+   - The card is treated as unauthorized.
+   - A different buzzer sound is generated.
+7. The UID and status are also displayed in the Serial Monitor.
+
+## System Flow
+
+```text
+Start
+  |
+  v
+Initialize Arduino, RFID, LCD and Buzzer
+  |
+  v
+Wait for RFID Card
+  |
+  v
+Read Card UID
+  |
+  v
+Compare UID
+ / \
+/   \
+Match? ---- No ----> ACCESS DENIED
+  |                    |
+ Yes                   Buzzer
+  |                    |
+ACCESS GRANTED         |
+  |                    |
+Attendance Marked <----+
+  |
+  v
+Display Result
+  |
+  v
+Wait for Next Card
